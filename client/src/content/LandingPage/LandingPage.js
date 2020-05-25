@@ -1,18 +1,5 @@
 import React from 'react';
 
-const props = {
-  tabs: {
-    selected: 0,
-    triggerHref: '#',
-    role: 'navigation',
-  },
-  tab: {
-    href: '#',
-    role: 'presentation',
-    tabIndex: 0,
-  },
-};
-
 const LandingPage = () => {
   return (
     <div className="bx--grid bx--grid--full-width landing-page">

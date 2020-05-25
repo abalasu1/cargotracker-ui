@@ -4,8 +4,8 @@ import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import { Link, DataTableSkeleton, Pagination } from 'carbon-components-react';
 
-const REPO_QUERY = gql`
-  query REPO_QUERY {
+const CARGO_QUERY = gql`
+  query CARGO_QUERY {
     # Let's use carbon as our organization
     organization(login: "carbon-design-system") {
       # We'll grab all the repositories in one go. To load more resources
@@ -90,7 +90,7 @@ const getRowItems = rows =>
     links: <LinkList url={row.url} homepageUrl={row.homepageUrl} />,
   }));
 
-const RepoPage = () => {
+const CargoPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [firstRowIndex, setFirstRowIndex] = useState(0);
   const [currentPageSize, setCurrentPageSize] = useState(10);
@@ -99,7 +99,7 @@ const RepoPage = () => {
     <div className="bx--grid bx--grid--full-width bx--grid--no-gutter repo-page">
       <div className="bx--row repo-page__r1">
         <div className="bx--col-lg-16">
-          <Query query={REPO_QUERY}>
+          <Query query={CARGO_QUERY}>
             {({ loading, error, data: { organization } }) => {
               // Wait for the request to complete
               if (loading)
@@ -115,6 +115,7 @@ const RepoPage = () => {
               if (error) return `Error! ${error.message}`;
 
               // If we're here, we've got our data!
+              alert(JSON.stringify(organization));
               const { repositories } = organization;
               setTotalItems(repositories.totalCount);
               const rows = getRowItems(repositories.nodes);
@@ -152,4 +153,4 @@ const RepoPage = () => {
   );
 };
 
-export default RepoPage;
+export default CargoPage;

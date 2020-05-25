@@ -15,7 +15,7 @@ const CargoHeader = () => (
       Blue Cargo
     </HeaderName>
     <HeaderNavigation aria-label="Blue Cargo">
-      <HeaderMenuItem element={Link} to="/repos">
+      <HeaderMenuItem element={Link} to="/cargoitems">
         Cargo Items
       </HeaderMenuItem>
     </HeaderNavigation>
