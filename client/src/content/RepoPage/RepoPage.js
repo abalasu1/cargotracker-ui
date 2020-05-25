@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RepoTable from './RepoTable';
+import CargoTable from './CargoTable';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import { Link, DataTableSkeleton, Pagination } from 'carbon-components-react';
@@ -121,7 +121,7 @@ const RepoPage = () => {
 
               return (
                 <>
-                  <RepoTable
+                  <CargoTable
                     headers={headers}
                     rows={rows.slice(
                       firstRowIndex,
