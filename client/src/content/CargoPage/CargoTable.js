@@ -11,16 +11,30 @@ import {
   TableExpandRow,
   TableCell,
   TableExpandedRow,
+  TableToolbar,
+  TableToolbarSearch,
 } from 'carbon-components-react';
 
 const CargoTable = ({ rows, headers }) => {
   const getRowDescription = rowId => {
     const row = rows.find(({ id }) => id === rowId);
-    return row ? row.description : '';
+    return row ? row.transportStatus : '';
   };
 
+  const printRow = row => {
+    console.log(row);
+  };
+
+  const printRows = rows => {
+    console.log(rows);
+    rows.map(row => (
+      printRow(row)
+    ))
+  };
+
+  printRows(rows);
   return (
-    <DataTable
+    <DataTable isSortable
       rows={rows}
       headers={headers}
       render={({
@@ -29,6 +43,7 @@ const CargoTable = ({ rows, headers }) => {
         getHeaderProps,
         getRowProps,
         getTableProps,
+        onInputChange,
       }) => (
         <TableContainer
           title="Cargo Items"

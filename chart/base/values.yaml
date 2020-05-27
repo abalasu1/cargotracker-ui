@@ -3,6 +3,8 @@
 # Declare variables to be passed into your templates.
 global: {}
 
+apiHost: "cargotracker-bff"
+
 replicaCount: 1
 logLevel: "debug"
 
@@ -37,11 +39,11 @@ ingress:
 #  tlsSecretName: ""
 
 vcsInfo:
-  repoUrl: ""
-  branch: ""
+  repoUrl: "https://github.com/abalasu1/cargotracker-ui.git"
+  branch: "master"
 
-partOf: ""
+partOf: "cargotracker-frontend-dev"
 
-connectsTo: ""
+connectsTo: "cargotracker-bff"
 
 runtime: js

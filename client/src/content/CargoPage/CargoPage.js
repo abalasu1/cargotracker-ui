@@ -2,92 +2,61 @@ import React, { useState } from 'react';
 import CargoTable from './CargoTable';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-import { Link, DataTableSkeleton, Pagination } from 'carbon-components-react';
+import { DataTableSkeleton, Pagination } from 'carbon-components-react';
 
 const CARGO_QUERY = gql`
   query CARGO_QUERY {
-    # Let's use carbon as our organization
-    organization(login: "carbon-design-system") {
-      # We'll grab all the repositories in one go. To load more resources
-      # continuously, see the advanced topics.
-      repositories(first: 75, orderBy: { field: UPDATED_AT, direction: DESC }) {
-        totalCount
-        nodes {
-          url
-          homepageUrl
-          issues(filterBy: { states: OPEN }) {
-            totalCount
-          }
-          stargazers {
-            totalCount
-          }
-          releases(first: 1) {
-            totalCount
-            nodes {
-              name
-            }
-          }
-          name
-          updatedAt
-          createdAt
-          description
-          id
-        }
-      }
+    cargoItems {
+      bookingId,
+      bookingAmount,
+      origin,
+      destination,
+      arrivaldeadline,
+      transportStatus,
+      routingStatus
     }
   }
 `;
 
 const headers = [
   {
-    key: 'name',
-    header: 'Name',
+    key: 'bookingId',
+    header: 'Booking ID',
   },
   {
-    key: 'createdAt',
-    header: 'Created',
+    key: 'bookingAmount',
+    header: 'Booking Amount',
   },
   {
-    key: 'updatedAt',
-    header: 'Updated',
+    key: 'origin',
+    header: 'Origin',
   },
   {
-    key: 'issueCount',
-    header: 'Open Issues',
+    key: 'destination',
+    header: 'Destination',
   },
   {
-    key: 'stars',
-    header: 'Stars',
+    key: 'arrivaldeadline',
+    header: 'Arrival Deadline',
   },
   {
-    key: 'links',
-    header: 'Links',
+    key: 'routingStatus',
+    header: 'Routing Status',
   },
 ];
-
-const LinkList = ({ url, homepageUrl }) => (
-  <ul style={{ display: 'flex' }}>
-    <li>
-      <Link href={url}>GitHub</Link>
-    </li>
-    {homepageUrl && (
-      <li>
-        <span>&nbsp;|&nbsp;</span>
-        <Link href={homepageUrl}>Homepage</Link>
-      </li>
-    )}
-  </ul>
-);
 
 const getRowItems = rows =>
   rows.map(row => ({
     ...row,
-    key: row.id,
-    stars: row.stargazers.totalCount,
-    issueCount: row.issues.totalCount,
-    createdAt: new Date(row.createdAt).toLocaleDateString(),
-    updatedAt: new Date(row.updatedAt).toLocaleDateString(),
-    links: <LinkList url={row.url} homepageUrl={row.homepageUrl} />,
+    key: row.bookingId,
+    id: row.bookingId,
+    bookingId: row.bookingId,
+    bookingAmount: row.bookingAmount,
+    origin: row.origin,
+    destination: row.destination,
+    arrivaldeadline: new Date(row.arrivaldeadline.slice(0, 10)).toLocaleDateString(),
+    routingStatus: row.routingStatus,
+    transportStatus: row.transportStatus,
   }));
 
 const CargoPage = () => {
@@ -100,7 +69,7 @@ const CargoPage = () => {
       <div className="bx--row repo-page__r1">
         <div className="bx--col-lg-16">
           <Query query={CARGO_QUERY}>
-            {({ loading, error, data: { organization } }) => {
+            {({ loading, error, data: { cargoItems } }) => {
               // Wait for the request to complete
               if (loading)
                 return (
@@ -114,11 +83,9 @@ const CargoPage = () => {
               // Something went wrong with the data fetching
               if (error) return `Error! ${error.message}`;
 
-              // If we're here, we've got our data!
-              alert(JSON.stringify(organization));
-              const { repositories } = organization;
-              setTotalItems(repositories.totalCount);
-              const rows = getRowItems(repositories.nodes);
+              // If we're here, we've got our data!              
+              const rows = getRowItems(cargoItems);
+              setTotalItems(rows.length);
 
               return (
                 <>
