@@ -14,7 +14,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-  uri: 'http://cargotracker-bff',
+  uri: 'https://cargotracker-bff-cargotracker-frontend-dev.sandbox-ocp43-one-462537-b2e73aa4eddf9dc566faa4f42ccdd306-0000.eu-gb.containers.appdomain.cloud',
   //uri:  'http://' + (process.env.API_HOST || 'localhost:3001'),
   headers: {   
   },
