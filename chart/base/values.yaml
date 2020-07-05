@@ -27,9 +27,12 @@ route:
 ingress:
   enabled: true
   appid:
-    enabled: false
+    enabled: true
     # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
     requestType: web
+    binding:
+      name: "binding-sandbox-team-one-appid"
+      namespace: cargotracking-frontend-dev
 
 #  host: hello
   namespaceInHost: true
